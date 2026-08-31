@@ -1,0 +1,142 @@
+{
+  "$comment": [
+    "The price book. DATA, not code.",
+    "",
+    "The Worker emits no usage events and knows nothing about money. This file is",
+    "the only place a number lives, so a price change is a one-file edit and never a",
+    "deploy of the thing a patient reaches an emergency screen through.",
+    "",
+    "NOTHING HERE IS PUBLISHED. Every plan is status 'proposed' and every entry in",
+    "billingGates is met:false. docs/business-model.md explains each gate. Numbers",
+    "exist so they can be argued with, not because anyone may be billed from them.",
+    "",
+    "meteredDimensions is EMPTY ON PURPOSE. At R0 the Worker returns 503 for every",
+    "route (src/app.ts), so it counts nothing. A dimension listed here that the",
+    "Worker does not actually count would be a promise to invoice from a meter that",
+    "does not exist. tests/pricing-invariants.test.ts refuses that file rather than",
+    "letting an invoice quote a number nobody measured.",
+    "",
+    "forbiddenDimensions is not decoration. G11 limits notification to three",
+    "urgency-only channels so the app cannot find reasons to contact people. A price",
+    "per notification would pay the operator to send them, which is the incentive",
+    "G11 exists to remove. The billing unit must not re-create what a constitutional",
+    "gate removed."
+  ],
+
+  "pricingVersion": 1,
+  "currency": "JPY",
+  "updated": "2026-08-31",
+  "authority": "docs/business-model.md",
+
+  "phaseGate": "locked",
+
+  "meteredDimensions": [],
+
+  "candidateDimensions": [
+    {
+      "id": "advisory-session",
+      "describes": "one completed disclaimer -> intake -> emergency-screen -> verdict cycle",
+      "auditableByCustomer": true,
+      "meteredToday": false
+    },
+    {
+      "id": "escalation-handoff",
+      "describes": "one G6 human-review referral produced",
+      "auditableByCustomer": true,
+      "meteredToday": false
+    }
+  ],
+
+  "forbiddenDimensions": [
+    {
+      "id": "per-notification",
+      "why": "G11 — a price per notification pays the operator to notify"
+    },
+    {
+      "id": "per-patient-seat",
+      "why": "R1 derives a 30-day rotating pseudonym DID in the browser; there is no stable person to count, and a seat wall would sit in front of the G5 emergency screen"
+    },
+    {
+      "id": "per-verdict-accuracy",
+      "why": "accuracy is a device claim; selling it crosses the 薬機法 medical-device threshold this tier stays below"
+    }
+  ],
+
+  "billingGates": [
+    {
+      "id": "r1-phase-gate",
+      "description": "MITATE_R1_PHASE_GATE is no longer 'locked'",
+      "met": false
+    },
+    {
+      "id": "metering-exists",
+      "description": "the Worker actually counts advisory-session",
+      "met": false
+    },
+    {
+      "id": "device-classification",
+      "description": "医療機器該当性 settled for the advisory tier (PMDA SaMD consultation or documented self-assessment on file)",
+      "met": false
+    },
+    {
+      "id": "operator-terms",
+      "description": "terms of service and 特定商取引法 disclosure for the operating entity",
+      "met": false
+    },
+    {
+      "id": "advertising-review",
+      "description": "if the operator is a 医療機関, surface reviewed against the 医療広告 事例解説書",
+      "met": false
+    },
+    {
+      "id": "payment-rail",
+      "description": "a payment rail exists at all",
+      "met": false
+    }
+  ],
+
+  "plans": [
+    {
+      "id": "adherent",
+      "name": "Adherent",
+      "status": "free-permanent",
+      "audience": "the person using the app",
+      "monthlyBase": 0,
+      "pricedDimensions": [],
+      "includedLexicons": [
+        "com.etzhayyim.mitate.rhinitisIntake",
+        "com.etzhayyim.mitate.triageVerdict",
+        "com.etzhayyim.mitate.emergencyEscalation"
+      ],
+      "why": "a price a person must get past before the G5 emergency screen runs is a price standing between someone and an ER routing instruction"
+    },
+    {
+      "id": "operator-selfhost",
+      "name": "Operator — self-host",
+      "status": "free-permanent",
+      "audience": "宗教法人 / clinic / 産業医 running the Worker themselves",
+      "monthlyBase": 0,
+      "pricedDimensions": [],
+      "includedLexicons": [
+        "com.etzhayyim.mitate.rhinitisIntake",
+        "com.etzhayyim.mitate.triageVerdict",
+        "com.etzhayyim.mitate.emergencyEscalation"
+      ],
+      "why": "Apache-2.0 + Charter Compliance Rider; the real cost of entry is the R1 baseline attestations, which are not payable in money"
+    },
+    {
+      "id": "operator-managed",
+      "name": "Operator — managed tenancy",
+      "status": "proposed",
+      "audience": "operators who want the attestations honoured and the Worker run for them",
+      "monthlyBase": 40000,
+      "pricedDimensions": [],
+      "includedLexicons": [
+        "com.etzhayyim.mitate.rhinitisIntake",
+        "com.etzhayyim.mitate.triageVerdict",
+        "com.etzhayyim.mitate.emergencyEscalation"
+      ],
+      "why": "flat, with no usage component, because nothing is metered; the number is a starting point for argument and is not chargeable until every billingGate is met"
+    }
+  ]
+}

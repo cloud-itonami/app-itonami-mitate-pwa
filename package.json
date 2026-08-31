@@ -9,6 +9,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
+    "@types/node": "^25.9.1",
     "typescript": "^6.0.2",
     "vitest": "^4.1.0",
     "@cloudflare/workers-types": "^4.0.0"

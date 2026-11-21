@@ -50,7 +50,7 @@ R2 gated (return 503 `MitateR2GatedLexicon`):
 ```
 60-apps/mitate-pwa/
 ├── kotodama.jsonld           # app metadata + constitutional gates registry
-├── wrangler.jsonc            # CF Worker config; routes mitate.etzhayyim.com/*
+├── wrangler.jsonc            # CF Worker config; routes mitate.itonami.app/*
 ├── package.json              # typecheck + vitest
 ├── tsconfig.json
 ├── src/
@@ -89,3 +89,12 @@ R2 gated (return 503 `MitateR2GatedLexicon`):
 ## License
 
 Apache 2.0 + [Charter Compliance Rider v2.0](../../CHARTER-RIDER.md).
+
+## Divergence from upstream (2026-11-21, JUN-1410)
+
+The owner decided to unify the domains under `itonami.app`, so the wrangler routes and the
+`did:web` identifier moved from `etzhayyim.com` to `itonami.app`. This app is not deployed and the old
+identifier never resolved. The new hosts (`m1t4tp01.itonami.app`, `mitate.itonami.app`) resolve through the `itonami.app`
+wildcard record but answer 522, because no Worker is bound (measured 2026-11-21).
+
+Unchanged: other services' hostnames, the lexicon namespace, and `docs/adr/` (the record of that time).

@@ -15,12 +15,12 @@
   },
   "routes": [
     {
-      "pattern": "mitate.etzhayyim.com/*",
-      "zone_name": "etzhayyim.com"
+      "pattern": "mitate.itonami.app/*",
+      "zone_name": "itonami.app"
     },
     {
-      "pattern": "m1t4tp01.etzhayyim.com/*",
-      "zone_name": "etzhayyim.com"
+      "pattern": "m1t4tp01.itonami.app/*",
+      "zone_name": "itonami.app"
     }
   ],
   "assets": {

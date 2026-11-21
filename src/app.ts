@@ -1,4 +1,4 @@
-// mitate.etzhayyim.com — religious-corp self-care advisory PWA
+// mitate.itonami.app — religious-corp self-care advisory PWA
 // Per ADR-2605260100 (master) + ADR-2605260200 (R1 self-care advisory PWA).
 //
 // R0 phase: scaffold only — Worker contract locked, runtime returns 503 until R1
@@ -33,7 +33,7 @@ interface Env {
   ASSETS?: { fetch(req: CFRequest): Promise<CFResponse> };
 }
 
-const ACTOR_DID = "did:web:mitate.etzhayyim.com";
+const ACTOR_DID = "did:web:mitate.itonami.app";
 const NSID_PREFIX = "com.etzhayyim.mitate.";
 
 // R1 ACTIVE lexicon NSIDs (4 cells unlocked when MITATE_R1_PHASE_GATE !== "locked")

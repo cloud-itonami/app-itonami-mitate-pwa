@@ -1,6 +1,6 @@
 {
   "@context": "https://etzhayyim.com/ns/kotodama/v1",
-  "@id": "did:web:mitate.etzhayyim.com",
+  "@id": "did:web:mitate.itonami.app",
   "name": "mitate-pwa",
   "nanoid": "m1t4tp01",
   "project": "mitate",
